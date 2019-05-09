@@ -18,6 +18,8 @@ module.exports = {
   plugins: ['react'],
   extends: ['airbnb', 'eslint:recommended', 'plugin:react/recommended'],
   rules: {
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }]
-  }
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'react/jsx-one-expression-per-line': [{ allow: 'single-child' }]
+  },
+  parser: 'babel-eslint'
 };
