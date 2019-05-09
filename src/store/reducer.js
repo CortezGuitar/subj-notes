@@ -9,6 +9,7 @@ const reducer = (state = {}, action) => {
     case 'FETCH_NOTES_SUCCESS':
       return {
         ...state,
+        notes: action.payload,
         loading: false,
         error: null
       };
@@ -17,6 +18,16 @@ const reducer = (state = {}, action) => {
         ...state,
         loading: false,
         error: action.payload
+      };
+    case 'CREATE_NOTE':
+      return {
+        ...state,
+        notes: [...state.notes, action.payload]
+      };
+
+    case 'REMOVE_NOTE':
+      return {
+        notes: state.notes.filter(note => note.id !== action.payload)
       };
 
     default:

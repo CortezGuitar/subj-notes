@@ -7,9 +7,11 @@ import App from './components/App';
 import SubjService, { SubjServiceProvider } from './service';
 import store from './store/store';
 
+const subjService = new SubjService();
+
 ReactDOM.render(
   <Provider store={store}>
-    <SubjServiceProvider value={SubjService}>
+    <SubjServiceProvider value={subjService}>
       <Router>
         <App />
       </Router>

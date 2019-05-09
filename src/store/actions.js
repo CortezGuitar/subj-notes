@@ -26,4 +26,18 @@ const fetchNotes = subjService => () => dispatch => {
     .catch(error => dispatch(notesError(error)));
 };
 
-export default fetchNotes;
+const createNote = note => {
+  return {
+    type: 'CREATE_NOTE',
+    payload: note
+  };
+};
+
+const removeNote = id => {
+  return {
+    type: 'REMOVE_NOTE',
+    payload: id
+  };
+};
+
+export { fetchNotes, createNote, removeNote };
