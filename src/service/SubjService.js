@@ -3,22 +3,22 @@
 export default class SubjService {
   data = [
     {
-      id: 1,
+      id: '1',
       title: 'Note Title One',
       content: 'Note Content'
     },
     {
-      id: 2,
+      id: '2',
       title: 'Note Title Two',
       content: 'Note Content'
     },
     {
-      id: 3,
+      id: '3',
       title: 'Note Title Three',
       content: 'Note Content'
     },
     {
-      id: 4,
+      id: '4',
       title: 'Note Title Four',
       content: 'Note Content'
     }

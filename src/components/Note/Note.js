@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Note = ({ title, content, id, removeNote }) => {
   const onRemoveHandler = id => {
@@ -11,12 +12,15 @@ const Note = ({ title, content, id, removeNote }) => {
       <div className="card-body">
         <p className="card-text">{content}</p>
         <div className="d-flex btn-group">
-          <button type="button" className="btn btn-info">
+          <Link
+            to={{ pathname: `/edit-note/${id}`, state: { title, content, id } }}
+            className="btn btn-outline-info"
+          >
             Edit
-          </button>
+          </Link>
           <button
             type="button"
-            className="btn btn-danger"
+            className="btn btn-outline-danger"
             onClick={() => onRemoveHandler(id)}
           >
             Remove

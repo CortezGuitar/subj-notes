@@ -1,28 +1,55 @@
-/* eslint-disable jsx-a11y/label-has-for */
-/* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import { createNote } from '../../store/actions';
+import { createNote, editNote } from '../../store/actions';
 
 class Form extends Component {
   state = {
-    title: '',
-    content: ''
+    title: this.props.location.state ? this.props.location.state.title : '',
+    content: this.props.location.state ? this.props.location.state.content : '',
+    id: this.props.location.state ? this.props.location.state.id : ''
   };
+
+  componentDidMount() {
+    console.log(this.props.location.state);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location.state) {
+      if (this.props.location.state.id !== prevProps.location.state.id) {
+        this.setState({
+          title: this.props.location.state.title,
+          content: this.props.location.state.content,
+          id: this.props.location.state.id
+        });
+      }
+    }
+  }
 
   onSubmitHandler = e => {
     e.preventDefault();
-    const { title, content } = this.state;
+    const { title, content, id } = this.state;
+    const { onCreateNote, onEditNote } = this.props;
+    let newNote;
 
-    const newNote = {
-      title,
-      content,
-      id: Math.random() * 200
-    };
+    if (id) {
+      newNote = {
+        title,
+        content,
+        id
+      };
+      onEditNote(newNote);
+    } else {
+      newNote = {
+        title,
+        content,
+        id: (Math.random() * 200).toString()
+      };
+      onCreateNote(newNote);
+    }
 
-    this.props.onCreateNote(newNote);
-    this.setState({ title: '', content: '' });
+    this.props.history.push('/');
   };
 
   onChangeHandler = e => {
@@ -72,6 +99,9 @@ class Form extends Component {
           <button type="submit" className="btn btn-outline-primary">
             Submit
           </button>
+          <Link to="/" className="btn btn-outline-primary">
+            Back
+          </Link>
         </div>
       </form>
     );
@@ -79,7 +109,8 @@ class Form extends Component {
 }
 
 const mapDispatchToProps = {
-  onCreateNote: createNote
+  onCreateNote: createNote,
+  onEditNote: editNote
 };
 
 export default connect(

@@ -40,4 +40,11 @@ const removeNote = id => {
   };
 };
 
-export { fetchNotes, createNote, removeNote };
+const editNote = note => {
+  return {
+    type: 'EDIT_NOTE',
+    payload: note
+  };
+};
+
+export { fetchNotes, createNote, removeNote, editNote };
