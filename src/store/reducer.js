@@ -47,6 +47,7 @@ const reducer = (state = {}, action) => {
     case 'REMOVE_NOTE_SUCCESS':
       return {
         ...state,
+        loading: false,
         notes: state.notes.filter(note => note.id !== action.payload)
       };
     case 'REMOVE_NOTE_FAILURE':
@@ -64,6 +65,7 @@ const reducer = (state = {}, action) => {
     case 'UPDATE_NOTE_SUCCESS':
       return {
         ...state,
+        loading: false,
         notes: state.notes.map(note =>
           note.id === action.payload.id ? (note = action.payload) : note
         )

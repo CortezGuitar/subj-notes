@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 
 import NoteList from '../NoteList';
 import Form from '../Form';
+import ErrorIndicator from '../ErrorIndicator';
 
-function App({ notes }) {
+function App({ notes, error }) {
   return (
     <div className="container">
       <div className="jumbotron jumbotron-fluid bg-light p-2 mb-1">
@@ -30,13 +31,14 @@ function App({ notes }) {
           </div>
         </div>
       </div>
-      <NoteList />
+      {error ? <ErrorIndicator /> : <NoteList />}
     </div>
   );
 }
 
-const mapStateToProps = state => ({
-  notes: state.notes
+const mapStateToProps = ({ notes, error }) => ({
+  notes,
+  error
 });
 
 export default connect(mapStateToProps)(App);

@@ -11,14 +11,13 @@ class NoteList extends Component {
     this.props.fetchNotes();
   }
 
-  componentDidUpdate() {
-    if (this.props.error) {
-      this.props.fetchNotes();
-    }
-  }
-
   render() {
-    const { notes, removeNote } = this.props;
+    const { notes, removeNote, loading } = this.props;
+
+    if (loading) {
+      return <h2 className="text-warning text-center">Loading...</h2>;
+    }
+
     if (notes) {
       return (
         <div className="d-flex flex-wrap justify-content-around">
@@ -34,12 +33,12 @@ class NoteList extends Component {
         </div>
       );
     }
-    return <div />;
+    return <h2 className="text-warning text-center">Loading...</h2>;
   }
 }
 
-const mapStateToProps = ({ notes, error }) => {
-  return { notes, error };
+const mapStateToProps = ({ notes, loading }) => {
+  return { notes, loading };
 };
 
 const mapDispatchToProps = (dispatch, { subjService }) => {

@@ -78,7 +78,7 @@ const removeNote = subjService => id => dispatch => {
   dispatch(removeNoteRequested());
   subjService
     .removeNote(id)
-    .then(dispatch(removeNoteLoaded(id)))
+    .then(() => dispatch(removeNoteLoaded(id)))
     .catch(error => dispatch(removeNoteError(error)));
 };
 
