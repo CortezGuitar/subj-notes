@@ -44,14 +44,11 @@ export default class SubjService {
 
   getNotes = async () => {
     const resp = await this.getResource('notes');
-    console.log(resp);
     return resp;
   };
 
   createNote = async body => {
-    console.log(body);
     const resp = await this.postResource('notes', body);
-    console.log(resp);
     return resp;
   };
 

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import NoteList from '../NoteList';
 import Form from '../Form';
 import ErrorIndicator from '../ErrorIndicator';
+import './App.css';
 
 function App({ notes, error }) {
   return (

@@ -28,7 +28,7 @@ const reducer = (state = {}, action) => {
     case 'CREATE_NOTE_SUCCESS':
       return {
         ...state,
-        notes: [...state.notes, action.payload],
+        notes: [action.payload, ...state.notes],
         loading: false,
         error: null
       };
