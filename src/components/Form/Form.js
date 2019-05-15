@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
 
-import { createNote, editNote } from '../../store/actions';
+import { createNote, updateNote } from '../../store/actions';
+import withSubjService from '../hoc';
 
 class Form extends Component {
   state = {
@@ -30,21 +32,19 @@ class Form extends Component {
   onSubmitHandler = e => {
     e.preventDefault();
     const { title, content, id } = this.state;
-    const { onCreateNote, onEditNote } = this.props;
+    const { onCreateNote, onUpdateNote } = this.props;
     let newNote;
 
     if (id) {
       newNote = {
         title,
-        content,
-        id
+        content
       };
-      onEditNote(newNote);
+      onUpdateNote(id, newNote);
     } else {
       newNote = {
         title,
-        content,
-        id: (Math.random() * 200).toString()
+        content
       };
       onCreateNote(newNote);
     }
@@ -108,12 +108,19 @@ class Form extends Component {
   }
 }
 
-const mapDispatchToProps = {
-  onCreateNote: createNote,
-  onEditNote: editNote
+const mapDispatchToProps = (dispatch, { subjService }) => {
+  return bindActionCreators(
+    {
+      onCreateNote: createNote(subjService),
+      onUpdateNote: updateNote(subjService)
+    },
+    dispatch
+  );
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(Form);
+export default withSubjService(
+  connect(
+    null,
+    mapDispatchToProps
+  )(Form)
+);

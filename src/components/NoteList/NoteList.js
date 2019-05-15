@@ -11,12 +11,18 @@ class NoteList extends Component {
     this.props.fetchNotes();
   }
 
+  componentDidUpdate() {
+    if (this.props.error) {
+      this.props.fetchNotes();
+    }
+  }
+
   render() {
     const { notes, removeNote } = this.props;
-    return (
-      <div className="d-flex flex-wrap justify-content-around">
-        {notes &&
-          notes.map(({ id, title, content }) => (
+    if (notes) {
+      return (
+        <div className="d-flex flex-wrap justify-content-around">
+          {notes.map(({ id, title, content }) => (
             <Note
               key={id}
               title={title}
@@ -25,20 +31,22 @@ class NoteList extends Component {
               id={id}
             />
           ))}
-      </div>
-    );
+        </div>
+      );
+    }
+    return <div />;
   }
 }
 
-const mapStateToProps = ({ notes }) => {
-  return { notes };
+const mapStateToProps = ({ notes, error }) => {
+  return { notes, error };
 };
 
 const mapDispatchToProps = (dispatch, { subjService }) => {
   return bindActionCreators(
     {
       fetchNotes: fetchNotes(subjService),
-      removeNote: removeNote
+      removeNote: removeNote(subjService)
     },
     dispatch
   );

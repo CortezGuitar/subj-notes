@@ -1,34 +1,67 @@
-// import axios from 'axios';
+import axios from 'axios';
+
+const instance = axios.create({
+  baseURL: `https://cors-anywhere.herokuapp.com/http://test.subj.ua/api/v1/`,
+  headers: { Authorization: 'Bearer 2wkoypsjcuoh2p7b5mn36s4wyyipwritpeqy' }
+});
 
 export default class SubjService {
-  data = [
-    {
-      id: '1',
-      title: 'Note Title One',
-      content: 'Note Content'
-    },
-    {
-      id: '2',
-      title: 'Note Title Two',
-      content: 'Note Content'
-    },
-    {
-      id: '3',
-      title: 'Note Title Three',
-      content: 'Note Content'
-    },
-    {
-      id: '4',
-      title: 'Note Title Four',
-      content: 'Note Content'
+  async getResource(url) {
+    try {
+      const resp = await instance.get(`${url}`);
+      return resp.data;
+    } catch (err) {
+      return Promise.reject(err.response);
     }
-  ];
+  }
 
-  getNotes = () => {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve(this.data);
-      }, 700);
-    });
+  async postResource(url, body) {
+    try {
+      const resp = await instance.post(`${url}`, body);
+      return resp.data;
+    } catch (err) {
+      return Promise.reject(err.response);
+    }
+  }
+
+  async deleteResource(url) {
+    try {
+      const resp = await instance.delete(`${url}`);
+      return resp.data;
+    } catch (err) {
+      return Promise.reject(err.response);
+    }
+  }
+
+  async patchResource(url, body) {
+    try {
+      const resp = await instance.patch(`${url}`, body);
+      return resp.data;
+    } catch (err) {
+      return Promise.reject(err.response);
+    }
+  }
+
+  getNotes = async () => {
+    const resp = await this.getResource('notes');
+    console.log(resp);
+    return resp;
+  };
+
+  createNote = async body => {
+    console.log(body);
+    const resp = await this.postResource('notes', body);
+    console.log(resp);
+    return resp;
+  };
+
+  removeNote = async id => {
+    const resp = await this.deleteResource(`notes/${id}`);
+    return resp;
+  };
+
+  updateNote = async (id, body) => {
+    const resp = await this.patchResource(`notes/${id}`, body);
+    return resp;
   };
 }

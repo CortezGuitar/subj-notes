@@ -26,25 +26,88 @@ const fetchNotes = subjService => () => dispatch => {
     .catch(error => dispatch(notesError(error)));
 };
 
-const createNote = note => {
+const createNoteRequested = () => {
   return {
-    type: 'CREATE_NOTE',
+    type: 'CREATE_NOTE_REQUEST'
+  };
+};
+
+const createNoteLoaded = note => {
+  return {
+    type: 'CREATE_NOTE_SUCCESS',
     payload: note
   };
 };
 
-const removeNote = id => {
+const createNoteError = error => {
   return {
-    type: 'REMOVE_NOTE',
+    type: 'CREATE_NOTE_FAILURE',
+    payload: error
+  };
+};
+
+const createNote = subjService => note => dispatch => {
+  dispatch(createNoteRequested());
+  subjService
+    .createNote(note)
+    .then(data => dispatch(createNoteLoaded(data)))
+    .catch(error => dispatch(createNoteError(error)));
+};
+
+const removeNoteRequested = () => {
+  return {
+    type: 'REMOVE_NOTE_REQUEST'
+  };
+};
+
+const removeNoteLoaded = id => {
+  return {
+    type: 'REMOVE_NOTE_SUCCESS',
     payload: id
   };
 };
 
-const editNote = note => {
+const removeNoteError = error => {
   return {
-    type: 'EDIT_NOTE',
+    type: 'REMOVE_NOTE_FAILURE',
+    payload: error
+  };
+};
+
+const removeNote = subjService => id => dispatch => {
+  dispatch(removeNoteRequested());
+  subjService
+    .removeNote(id)
+    .then(dispatch(removeNoteLoaded(id)))
+    .catch(error => dispatch(removeNoteError(error)));
+};
+
+const updateNoteRequested = () => {
+  return {
+    type: 'UPDATE_NOTE_REQUEST'
+  };
+};
+
+const updateNoteLoaded = note => {
+  return {
+    type: 'UPDATE_NOTE_SUCCESS',
     payload: note
   };
 };
 
-export { fetchNotes, createNote, removeNote, editNote };
+const updateNoteError = error => {
+  return {
+    type: 'UPDATE_NOTE_FAILURE',
+    payload: error
+  };
+};
+
+const updateNote = subjService => (id, body) => dispatch => {
+  dispatch(updateNoteRequested());
+  subjService
+    .updateNote(id, body)
+    .then(data => dispatch(updateNoteLoaded(data)))
+    .catch(error => dispatch(updateNoteError(error)));
+};
+
+export { fetchNotes, createNote, removeNote, updateNote };
