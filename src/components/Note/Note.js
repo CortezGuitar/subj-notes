@@ -23,10 +23,8 @@ class Note extends Component {
   notificationDOMRef = React.createRef();
   addNotification() {
     this.notificationDOMRef.current.addNotification({
-      title: 'Awesomeness',
-      message: 'Awesome Notifications!',
       content: (
-        <div className="alert alert-success" style={{ fontFamily: '"Neucha"' }}>
+        <div className="alert alert-success">
           <p>
             Note will be created/removed in 2 seconds. Click "UNDO" to cancel
             operation.
