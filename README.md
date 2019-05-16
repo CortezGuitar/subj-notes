@@ -1,4 +1,4 @@
-### node & npm
+### `node & npm`
 
 You must have node and npm installed. Can get both via link https://nodejs.org/uk/
 
